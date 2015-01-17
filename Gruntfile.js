@@ -29,6 +29,22 @@ module.exports = function(grunt) {
 			}
 		},
 
+		svgstore: {
+			options: {
+				prefix : 'shape-',
+				cleanup: false,
+				svg: {
+					style: 'display: none;'
+				},
+				includedemo : true
+			},
+			default: {
+				files: {
+					'target/dest.svg' : ['svg/*.svg']
+				}
+			}
+		},
+
 		sass: {
 			core: {
 				files: {
@@ -113,6 +129,18 @@ module.exports = function(grunt) {
 			]
 		},
 
+		includereplace: {
+			your_target: {
+				options: {
+					// Task-specific options go here.
+				},
+				// Files to perform replacements and includes with
+				src: 'tpl/index.html',
+				// Destination directory to copy files to
+				dest: 'index.html'
+			}
+		},
+
 		watch: {
             options: {
                 livereload: true
@@ -131,7 +159,15 @@ module.exports = function(grunt) {
 			},
             html: {
                 files: [ 'index.html']
-            }
+            },
+			svgIcons: {
+				files: [ 'svg/*.svg' ],
+				tasks: [ 'svgstore' ]
+			},
+			author: {
+				files: [ 'author/*' ],
+				tasks: [ 'includereplace' ]
+			}
 		}
 
 	});
@@ -146,9 +182,11 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks( 'grunt-contrib-connect' );
 	grunt.loadNpmTasks( 'grunt-autoprefixer' );
 	grunt.loadNpmTasks( 'grunt-zip' );
+	grunt.loadNpmTasks( 'grunt-svgstore');
+	grunt.loadNpmTasks( 'grunt-include-replace');
 
 	// Default task
-	grunt.registerTask( 'default', [ 'css', 'js' ] );
+	grunt.registerTask( 'default', [ 'css', 'js', 'svgstore', 'includereplace' ] );
 
 	// JS task
 	grunt.registerTask( 'js', [ 'jshint', 'uglify', 'qunit' ] );
@@ -166,7 +204,7 @@ module.exports = function(grunt) {
 	grunt.registerTask( 'package', [ 'default', 'zip' ] );
 
 	// Serve presentation locally
-	grunt.registerTask( 'serve', [ 'connect', 'watch' ] );
+	grunt.registerTask( 'serve', [ 'svgstore', 'includereplace', 'connect', 'watch' ] );
 
 	// Run tests
 	grunt.registerTask( 'test', [ 'jshint', 'qunit' ] );
