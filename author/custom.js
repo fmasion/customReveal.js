@@ -21,4 +21,17 @@
 		]
 	});
 
+	Reveal.addEventListener( 'fragmentshown', function( event ) {
+    	var frag = event.fragment;
+    	var script = frag.getElementsByTagName('script')[0];
+		var toto = eval(script.innerHTML);
+		toto.show();
+	}, false );
+	Reveal.addEventListener( 'fragmenthidden', function( event ) {
+    	var frag = event.fragment;
+    	var script = frag.getElementsByTagName('script')[0];
+		var toto = eval(script.innerHTML);
+		toto.hide();
+	}, false );
+
 </script>

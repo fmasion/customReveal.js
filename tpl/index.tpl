@@ -33,14 +33,10 @@
 
 	<body>
 		@@include('../target/dest.svg')
-
-		<div class="reveal">
-
-			@@include('../author/slides.html')
-
-		</div>
+		@@include('../author/slides.html')
 
 		<script src="lib/js/head.min.js"></script>
+		<script src="js/snap.svg-min.js"></script>
 		<script src="js/reveal.js"></script>
 
 		@@include('../author/custom.js')

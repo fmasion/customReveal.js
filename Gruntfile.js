@@ -135,7 +135,7 @@ module.exports = function(grunt) {
 					// Task-specific options go here.
 				},
 				// Files to perform replacements and includes with
-				src: 'tpl/index.html',
+				src: 'tpl/index.tpl',
 				// Destination directory to copy files to
 				dest: 'index.html'
 			}
